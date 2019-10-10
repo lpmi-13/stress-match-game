@@ -1,0 +1,135 @@
+{
+  "private": false,
+  "name": "stress-out",
+  "homepage": "https://www.grammarbuffet.org/stress-game/",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
+    "build": "rm -rf ./build && preact build --template src/index.html -p",
+    "serve": "npm run build && preact serve",
+    "dev": "preact watch -p 5000",
+    "lint": "eslint src",
+    "prettier": "prettier --print-width 80 --single-quote --trailing-comma es5 --write src/**/*.js",
+    "test": "jest"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "jest": {
+    "setupFiles": [
+      "./tests/setup.js"
+    ],
+    "testURL": "http://localhost:8080",
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "identity-obj-proxy",
+      "^react$": "preact-compat",
+      "^react-dom$": "preact-compat"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "parser": "babel-eslint",
+    "globals": {
+      "Promise": 1
+    },
+    "plugins": [
+      "react"
+    ],
+    "settings": {
+      "react": {
+        "pragma": "h"
+      }
+    },
+    "env": {
+      "node": true,
+      "browser": true
+    },
+    "rules": {
+      "no-console": 1,
+      "no-empty": 0,
+      "semi": 2,
+      "keyword-spacing": 2,
+      "react/no-string-refs": 2,
+      "react/no-find-dom-node": 2,
+      "react/no-is-mounted": 2,
+      "react/jsx-no-comment-textnodes": 2,
+      "react/jsx-curly-spacing": 2,
+      "react/jsx-no-undef": 2,
+      "react/jsx-uses-react": 2,
+      "react/jsx-uses-vars": 2
+    }
+  },
+  "eslintIgnore": [
+    "build/*"
+  ],
+  "devDependencies": {
+    "autoprefixer": "^8.0.0",
+    "babel": "^6.5.2",
+    "babel-core": "^6.24.0",
+    "babel-eslint": "^8.2.2",
+    "babel-jest": "^20.0.0",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-react-jsx": "^6.8.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.24.0",
+    "babel-runtime": "^6.11.6",
+    "chai": "^4.0.2",
+    "copy-webpack-plugin": "^4.0.1",
+    "core-js": "^2.4.1",
+    "cross-env": "^5.0.1",
+    "css-loader": "^0.28.0",
+    "eslint": "^4.1.0",
+    "eslint-plugin-jest": "^21.7.1",
+    "eslint-plugin-react": "^7.0.0",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.7",
+    "html-webpack-plugin": "^3.0.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^20.0.0",
+    "json-loader": "^0.5.4",
+    "less": "^3.0.0",
+    "less-loader": "^4.0.3",
+    "mkdirp": "^0.5.1",
+    "ncp": "^2.0.0",
+    "offline-plugin": "^5.0.0",
+    "postcss-loader": "^2.0.3",
+    "preact-cli": "^2.2.1",
+    "preact-jsx-chai": "^2.2.1",
+    "prettier": "^1.16.4",
+    "raw-loader": "^0.5.1",
+    "regenerator-runtime": "^0.10.3",
+    "replace-bundle-webpack-plugin": "^1.0.0",
+    "script-ext-html-webpack-plugin": "^2.0.0",
+    "sinon": "^4.2.1",
+    "sinon-chai": "^2.9.0",
+    "source-map-loader": "^0.2.1",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.0",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^3.1.12"
+  },
+  "dependencies": {
+    "if-env": "^1.0.4",
+    "preact": "^8.4.2",
+    "preact-compat": "^3.15.0",
+    "preact-render-to-string": "^3.6.0",
+    "preact-router": "^2.5.1",
+    "promise-polyfill": "^7.0.1",
+    "proptypes": "^1.0.0",
+    "serve": "^7.1.3"
+  }
+}

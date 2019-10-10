@@ -1,0 +1,21 @@
+{
+  "name": "Rhymez",
+  "short_name": "Rhymez",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "icons": [
+    {
+      "src": "/rhyme-game/assets/icons/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/rhyme-game/assets/icons/android-chrome-256x256.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
