@@ -9,20 +9,20 @@ import Win from '../routes/win';
 
 export default class App extends Component {
   state = {
-    selectedRhyme: '',
+    selectedStress: '',
   };
 
-  selectRhyme = selectedRhyme => this.setState({ selectedRhyme });
+  selectStress = selectedStress => this.setState({ selectedStress });
 
   render() {
     return (
       <div id="app">
         <Router onChange={this.handleRoute}>
-          <Home path="/rhyme-game/" />
-          <Game path="/rhyme-game/game" rhyme={this.state.selectedRhyme} />
-          <Loss path="/rhyme-game/loss" />
-          <Select path="/rhyme-game/select" onSelectRhyme={this.selectRhyme} />
-          <Win path="/rhyme-game/win" />
+          <Home path="/" />
+          <Game path="/game" stress={this.state.selectedStress} />
+          <Loss path="/loss" />
+          <Select path="/select" onSelectStress={this.selectStress} />
+          <Win path="/win" />
         </Router>
       </div>
     );

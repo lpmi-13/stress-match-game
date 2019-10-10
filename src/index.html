@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title><%= htmlWebpackPlugin.options.title %></title>
-		<meta name="Description" content="A PWA for Preact featuring a game to match rhymes for English language learners.">
+		<meta name="Description" content="A PWA for Preact featuring a game to match stress patterns for English language learners.">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -20,7 +20,7 @@
         <script>
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function() {
-                    navigator.serviceWorker.register('/rhyme-game/sw.js', {scope: '/rhyme-game/'}).then(function(registration) {
+                    navigator.serviceWorker.register('/stress-game/sw.js', {scope: '/stress-game/'}).then(function(registration) {
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);
                     }, function(err) {
                         console.log('ServiceWorker registration failed: ', err);

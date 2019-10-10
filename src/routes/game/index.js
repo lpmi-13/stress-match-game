@@ -8,14 +8,14 @@ import { generateGridCards } from '../../utils';
 export default class Game extends Component {
 	state = {
 		correctCards: {},
-		deck: generateGridCards(this.props.rhyme),
+		deck: generateGridCards(this.props.stress),
 		flippedCards: {},
-		rhymeToMatch: this.props.rhyme,
+		stressToMatch: this.props.stress,
 		score: 0,
 		wrongCards: {},
 	};
 
-  getCardRhymeStatus = ({ key, values }) => {
+  getCardStressStatus = ({ key, values }) => {
 
     const { correctCards, flippedCards, wrongCards } = this.state;
     if (correctCards[values.word]) {
@@ -38,10 +38,10 @@ export default class Game extends Component {
   }
 	
 	checkCardStatus = ({ key, values }) => {
-		const { correctCards, flippedCards, rhymeToMatch, score, wrongCards } = this.state;
+		const { correctCards, flippedCards, stressToMatch, score, wrongCards } = this.state;
 
 		this.setState({ flippedCards: { ...flippedCards, key } });
-		if (values.rhyme === rhymeToMatch.rhyme) {
+		if (values.stress === stressToMatch.stress) {
 			this.setState({
 				correctCards: { ...correctCards, [values.word] : true },
 				score: score + 1
@@ -76,7 +76,7 @@ export default class Game extends Component {
 				correctCards: {},
 				flippedCards: {},
 			});
-			route('/rhyme-game/win');
+			route('/win');
 		}, 300);
 	}
 
@@ -86,7 +86,7 @@ export default class Game extends Component {
 	  		correctCards: {},
 	  		flippedCards: {},
 	  	});
-      route('/rhyme-game/loss');
+      route('/loss');
     }, 300);
 	}
 				
@@ -95,14 +95,14 @@ export default class Game extends Component {
 		return (
 			<div class={style.game}>
 			  <div>
-			    <header class={style.match}>Rhymes with:<br/> {state.rhymeToMatch.word}</header>
+			    <header class={style.match}>Stress Pattern:<br/> {state.stressToMatch.word}</header>
 			  	<header class={style.score}>Score: {state.score}</header>
 			  </div>
 				<div class={style.grid}>
 					{state.deck.map(item => (
 						<Card
 						onClick={this.createCardClickListener(item)}
-						rhymeStatus={this.getCardRhymeStatus(item)}
+						stressStatus={this.getCardStressStatus(item)}
 						word={item.values.word}
 						/>
 					))}

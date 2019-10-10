@@ -1,28 +1,29 @@
 import data from '../data/expanded-words.js';
 
-export default function collectData(rhyme) {
-  const rhymeArray = Object.keys(data);
-  const rhymeIndex = rhymeArray.indexOf(rhyme.rhyme);
+export default function collectData(stressPattern) {
+  const stressArray = Object.keys(data);
+  const stressIndex = stressArray.indexOf(stressPattern.stress);
 
-  const firstRhymeArray = data[rhyme.rhyme];
-  // make sure the word that we "rhyme with" isn't in the cards to click
-  const filteredFirstRhymeArray = firstRhymeArray.filter(
-    t => t.word !== rhyme.word
+  console.log({stressPattern});
+  const firstStressArray = data[stressPattern.stress].map(word => ({word, stress: stressPattern.stress}));
+  // make sure the word that we "match with" isn't in the cards to click
+  const filteredFirstStressArray = firstStressArray.filter(
+    t => t.word !== stressPattern.word
   );
 
-  // get a rhyme that's not the one we selected
-  let number = rhymeIndex;
-  while (number === rhymeIndex) {
-    number = Math.floor(Math.random() * Math.floor(rhymeArray.length));
+  // get a stress pattern that's not the one we selected
+  let number = stressIndex;
+  while (number === stressIndex) {
+    number = Math.floor(Math.random() * Math.floor(stressArray.length));
   }
 
-  const secondRhymeSound = rhymeArray[number];
-  const secondRhymeArray = data[secondRhymeSound];
+  const secondStressSound = stressArray[number];
+  const secondStressArray = data[secondStressSound].map(word => ({word, stress: secondStressSound }));
 
-  const shuffledFirst = filteredFirstRhymeArray.sort(
+  const shuffledFirst = filteredFirstStressArray.sort(
     () => Math.random() - Math.random()
   );
-  const shuffledSecond = secondRhymeArray.sort(
+  const shuffledSecond = secondStressArray.sort(
     () => Math.random() - Math.random()
   );
 

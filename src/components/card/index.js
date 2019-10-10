@@ -3,12 +3,12 @@ import style from './style.css';
 
 export default function Card({
 	onClick,
-    rhymeStatus,
+    stressStatus,
 	word
 }) {
 
 	return (
-		<div class={style.card} data-rhyme-status={rhymeStatus}>
+		<div class={style.card} data-stress-status={stressStatus}>
 			<button class={style.front} onClick={onClick}>
 				{word}
 			</button>

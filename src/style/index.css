@@ -1,7 +1,7 @@
 @font-face {
   font-display: swap;
   font-family: 'Press Start 2P';
-  src: url('/rhyme-game/assets/fonts/press-start-2p-v7-latin-regular.woff2') format('truetype');
+  src: url('../assets/fonts/press-start-2p-v7-latin-regular.woff2') format('truetype');
 }
 
 html, body {

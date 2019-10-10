@@ -2,37 +2,37 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 import style from './style.css';
-import data from '../../data/expanded-words.js';
+import data from '../../data/expanded-words';
 
-const rhymez = Object.keys(data);
-const selectedIndex = (rhymeList) => Math.floor(Math.random() * Math.floor(rhymeList.length));
+const stressez = Object.keys(data);
+const selectedIndex = (stressList) => Math.floor(Math.random() * Math.floor(stressList.length));
 
-const rhymeSelections = () => rhymez.map(rhyme => {
-	const rhymezArray = data[rhyme];
-	const randomIndex = selectedIndex(rhymezArray);
-	const selectedWord = rhymezArray[randomIndex];
-	return {"word": `${selectedWord.word}`, "rhyme": `${rhyme}`}
+const stressSelections = () => stressez.map(stressPattern => {
+	const stressezArray = data[stressPattern];
+	const randomIndex = selectedIndex(stressezArray);
+	const selectedWord = stressezArray[randomIndex];
+	return {"word": `${selectedWord}`, "stress": `${stressPattern}`}
 });
 
 export default class Select extends Component {
 
   state = {
-		rhymeSelections: rhymeSelections(),
+		stressSelections: stressSelections(),
 	}
 
 	startGame = (selection) => {
-    this.props.onSelectRhyme(selection);
-		route('/rhyme-game/game');
+    this.props.onSelectStress(selection);
+		route('/game');
 	};
 
 	render() {
 		return (
 			<div class={style.select}>
 				<div class={style.head}>
-					<h2>Choose a rhyme</h2>
+					<h2>Choose a stress pattern</h2>
 				</div>
-				<div class={style.rhymeSection}>
-				{this.state.rhymeSelections.map((selection) =>
+				<div class={style.stressSection}>
+				{this.state.stressSelections.map((selection) =>
 					<button class={style.button} onClick={() => this.startGame(selection)}>{selection.word}</button>
 				)}
 				</div>

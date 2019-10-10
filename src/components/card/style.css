@@ -31,14 +31,14 @@
   transform: rotateY(0deg);
 }
 
-.card[data-rhyme-status="FLIPPED"], .card[data-rhyme-status="MATCHED"], .card[data-rhyme-status="UNMATCHED"], .back{
+.card[data-stress-status="FLIPPED"], .card[data-stress-status="MATCHED"], .card[data-stress-status="UNMATCHED"], .back{
   transform: rotateY(180deg);
 }
 
-.card[data-rhyme-status="MATCHED"] .back{
+.card[data-stress-status="MATCHED"] .back{
   background-color: hsl(101, 70%, 55%);
 }
 
-.card[data-rhyme-status="UNMATCHED"] .back {
+.card[data-stress-status="UNMATCHED"] .back {
   background: hsl(0, 91%, 42%);
 }
