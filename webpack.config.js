@@ -128,7 +128,13 @@ module.exports = {
 			minify: { collapseWhitespace: true }
 		}),
 		new CopyWebpackPlugin([
-			{ from: './manifest.json', to: './' },
+			{ from: './manifest.json', to: './build/manifest.json',
+		      transform(content) {
+				  return content
+					.toString()
+					.replace('src": "/assets', `src": aaaaaaaaaaaaaaaaa/assets`);
+			  }   
+		    },
 			{ from: './favicon.ico', to: './' },
 			{ from: './sw-template.js',
 			  to: './build/sw.js',
