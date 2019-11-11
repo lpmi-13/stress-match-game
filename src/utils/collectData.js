@@ -4,8 +4,10 @@ export default function collectData(stressPattern) {
   const stressArray = Object.keys(data);
   const stressIndex = stressArray.indexOf(stressPattern.stress);
 
-  console.log({stressPattern});
-  const firstStressArray = data[stressPattern.stress].map(word => ({word, stress: stressPattern.stress}));
+  const firstStressArray = data[stressPattern.stress].map(word => ({
+    word,
+    stress: stressPattern.stress,
+  }));
   // make sure the word that we "match with" isn't in the cards to click
   const filteredFirstStressArray = firstStressArray.filter(
     t => t.word !== stressPattern.word
@@ -18,7 +20,10 @@ export default function collectData(stressPattern) {
   }
 
   const secondStressSound = stressArray[number];
-  const secondStressArray = data[secondStressSound].map(word => ({word, stress: secondStressSound }));
+  const secondStressArray = data[secondStressSound].map(word => ({
+    word,
+    stress: secondStressSound,
+  }));
 
   const shuffledFirst = filteredFirstStressArray.sort(
     () => Math.random() - Math.random()
