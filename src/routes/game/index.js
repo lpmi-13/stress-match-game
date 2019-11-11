@@ -3,7 +3,7 @@ import { route } from 'preact-router';
 
 import Card from '../../components/card';
 import style from './style.css';
-import { generateGridCards } from '../../utils';
+import { generateGridCards, stressDotMap } from '../../utils';
 
 export default class Game extends Component {
 	state = {
@@ -95,7 +95,7 @@ export default class Game extends Component {
 		return (
 			<div class={style.game}>
 			  <div>
-			    <header class={style.match}>Stress Pattern:<br/> {state.stressToMatch.word}</header>
+			    <header class={style.match}>Stress Pattern to Match:<br/> {stressDotMap(state.stressToMatch.stress).join('')}</header>
 			  	<header class={style.score}>Score: {state.score}</header>
 			  </div>
 				<div class={style.grid}>
