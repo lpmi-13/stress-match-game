@@ -1,7 +1,7 @@
 {
   "name": "Stress-Match-Game",
   "short_name": "Stress-Match-Game",
-  "start_url": "/stress-game/",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fff",
