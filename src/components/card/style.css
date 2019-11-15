@@ -24,6 +24,12 @@
   -moz-box-shadow: 0px 6px 5px 0px #000;
 }
 
+@media (max-width:455px) {
+	.card .front {
+    font-size: 0.75rem;
+	}
+}
+
 .card .front {
   background: #e7a61a;
   color: #000000;

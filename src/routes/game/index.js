@@ -95,8 +95,11 @@ export default class Game extends Component {
 		return (
 			<div class={style.game}>
 			  <div>
-			    <header class={style.match}>Stress Pattern to Match:<br/> {stressDotMap(state.stressToMatch.stress).join('')}</header>
-			  	<header class={style.score}>Score: {state.score}</header>
+				<div class={style.stressMatch}>
+			      <div class={style.match}>Stress Pattern to Match:</div>
+				  <div class={style.pattern}>{stressDotMap(state.stressToMatch.stress).join('')}</div>
+				</div>
+			  	<div class={style.score}>Score: {state.score}</div>
 			  </div>
 				<div class={style.grid}>
 					{state.deck.map(item => (
