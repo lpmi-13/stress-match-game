@@ -5,7 +5,7 @@ import style from './style.css';
 
 export default class Loss extends Component{
 	startGame = () => {
-		route('/select');
+		route('/stress-game/select');
 	};
 	
 	render () {

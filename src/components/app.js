@@ -18,11 +18,11 @@ export default class App extends Component {
     return (
       <div id="app">
         <Router onChange={this.handleRoute}>
-          <Home path="/" />
-          <Game path="/game" stress={this.state.selectedStress} />
-          <Loss path="/loss" />
-          <Select path="/select" onSelectStress={this.selectStress} />
-          <Win path="/win" />
+          <Home path="/stress-game/" />
+          <Game path="/stress-game/game" stress={this.state.selectedStress} />
+          <Loss path="/stress-game/loss" />
+          <Select path="/stress-game/select" onSelectStress={this.selectStress} />
+          <Win path="/stress-game/win" />
         </Router>
       </div>
     );
