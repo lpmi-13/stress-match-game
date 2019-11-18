@@ -24,9 +24,9 @@
   -moz-box-shadow: 0px 6px 5px 0px #000;
 }
 
-@media (max-width:455px) {
+@media (max-width:425px) {
 	.card .front {
-    font-size: 0.75rem;
+    font-size: 0.825rem;
 	}
 }
 
