@@ -2,7 +2,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
-import { setupPath} from '../../utils';
+import { setupPath, stressDotMap } from '../../utils';
 import style from './style.css';
 import data from '../../data/expanded-words';
 
@@ -35,7 +35,7 @@ export default class Select extends Component {
 				</div>
 				<div class={style.stressSection}>
 				{this.state.stressSelections.map((selection) =>
-					<button class={style.button} onClick={() => this.startGame(selection)}>{selection.word}</button>
+					<button class={style.button} onClick={() => this.startGame(selection)}><div class={style.buttonWord}>{selection.word}</div><div class={style.buttonStress}>{stressDotMap(selection.stress)}</div></button>
 				)}
 				</div>
 			</div>

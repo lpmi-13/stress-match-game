@@ -99,8 +99,8 @@ export default class Game extends Component {
 				<div class={style.stressMatch}>
 			      <div class={style.match}>Stress Pattern to Match:</div>
 				  <div class={style.pattern}>{stressDotMap(state.stressToMatch.stress).join('')}</div>
-				</div>
-			  	<div class={style.score}>Score: {state.score}</div>
+                </div>
+                <div class={style.score}>Score: {state.score} / 6</div>
 			  </div>
 				<div class={style.grid}>
 					{state.deck.map(item => (
