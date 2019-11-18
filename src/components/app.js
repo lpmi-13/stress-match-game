@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { Router } from 'preact-router';
 
+import { setupPath } from '../utils';
 import Home from '../routes/home';
 import Game from '../routes/game';
 import Loss from '../routes/loss';
@@ -18,11 +19,11 @@ export default class App extends Component {
     return (
       <div id="app">
         <Router onChange={this.handleRoute}>
-          <Home path="/stress-game/" />
-          <Game path="/stress-game/game" stress={this.state.selectedStress} />
-          <Loss path="/stress-game/loss" />
-          <Select path="/stress-game/select" onSelectStress={this.selectStress} />
-          <Win path="/stress-game/win" />
+          <Home path={`${setupPath()}/`} />
+          <Game path={`${setupPath()}/game`} stress={this.state.selectedStress} />
+          <Loss path={`${setupPath()}/loss`} />
+          <Select path={`${setupPath()}/select`} onSelectStress={this.selectStress} />
+          <Win path={`${setupPath()}/win`} />
         </Router>
       </div>
     );

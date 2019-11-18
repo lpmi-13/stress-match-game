@@ -1,6 +1,8 @@
 
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+
+import { setupPath} from '../../utils';
 import style from './style.css';
 import data from '../../data/expanded-words';
 
@@ -22,7 +24,7 @@ export default class Select extends Component {
 
 	startGame = (selection) => {
     this.props.onSelectStress(selection);
-		route('/stress-game/game');
+		route(`${setupPath()}/game`);
 	};
 
 	render() {

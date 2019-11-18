@@ -74,32 +74,6 @@ module.exports = {
 				})
 			},
 			{
-				test: /\.(less|css)$/,
-				exclude: [path.resolve(__dirname, 'src/components')],
-				use: ExtractTextPlugin.extract({
-					fallback: 'style-loader',
-					use: [
-						{
-							loader: 'css-loader',
-							options: { sourceMap: CSS_MAPS, importLoaders: 1, minimize: true }
-						},
-						{
-							loader: `postcss-loader`,
-							options: {
-								sourceMap: CSS_MAPS,
-								plugins: () => {
-									autoprefixer({ browsers: [ 'last 2 versions' ] });
-								}
-							}
-						},
-						{
-							loader: 'less-loader',
-							options: { sourceMap: CSS_MAPS }
-						}
-					]
-				})
-			},
-			{
 				test: /\.json$/,
 				use: 'json-loader'
 			},
@@ -192,12 +166,5 @@ module.exports = {
 		historyApiFallback: true,
 		open: true,
 		openPage: '',
-		proxy: {
-			// OPTIONAL: proxy configuration:
-			// '/optional-prefix/**': { // path pattern to rewrite
-			//   target: 'http://target-host.com',
-			//   pathRewrite: path => path.replace(/^\/[^\/]+\//, '')   // strip first path segment
-			// }
-		}
 	}
 };

@@ -1,11 +1,13 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
+
+import { setupPath } from '../../utils';
 import style from './style.css';
 
 
 export default class Win extends Component{
 	startGame = () => {
-		route('/stress-game/select');
+		route(`${setupPath()}/select`);
 	};
 
 	render () {

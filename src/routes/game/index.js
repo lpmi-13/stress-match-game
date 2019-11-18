@@ -1,6 +1,7 @@
 import { h, Component } from 'preact';
 import { route } from 'preact-router';
 
+import { setupPath } from '../../utils';
 import Card from '../../components/card';
 import style from './style.css';
 import { generateGridCards, stressDotMap } from '../../utils';
@@ -76,7 +77,7 @@ export default class Game extends Component {
 				correctCards: {},
 				flippedCards: {},
 			});
-			route('/stress-game/win');
+			route(`${setupPath()}/win`);
 		}, 300);
 	}
 
@@ -86,7 +87,7 @@ export default class Game extends Component {
 	  		correctCards: {},
 	  		flippedCards: {},
 	  	});
-      route('/stress-game/loss');
+      route(`${setupPath()}/loss`);
     }, 300);
 	}
 				
