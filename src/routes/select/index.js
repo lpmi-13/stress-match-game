@@ -30,9 +30,7 @@ export default class Select extends Component {
 	render() {
 		return (
 			<div class={style.select}>
-				<div class={style.head}>
-					<h2>Choose a stress pattern</h2>
-				</div>
+				<span class={style.head}>Choose a stress pattern</span>
 				<div class={style.stressSection}>
 				{this.state.stressSelections.map((selection) =>
 					<button class={style.button} onClick={() => this.startGame(selection)}><div class={style.buttonWord}>{selection.word}</div><div class={style.buttonStress}>{stressDotMap(selection.stress)}</div></button>

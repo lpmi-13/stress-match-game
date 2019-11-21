@@ -14,10 +14,8 @@ export default class Home extends Component{
 	render () {
           return (
         	<div class={style.home}>
-        	  <div class={style.head}>
-        	    <h2>Stress Match Game</h2>
-            </div>
-						<button class={style.button} onClick={this.select}>New Game</button>
+        	  <span class={style.head}>Stress Match Game</span>
+				<button class={style.button} onClick={this.select}>New Game</button>
         	</div>
           )
 	}
