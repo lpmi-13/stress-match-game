@@ -1,4 +1,5 @@
-import data from '../data/expanded-words.js';
+import data from '../data/expanded-words';
+import shuffle from './shuffle';
 
 export default function collectData(stressPattern) {
   const stressArray = Object.keys(data);
@@ -25,12 +26,8 @@ export default function collectData(stressPattern) {
     stress: secondStressSound,
   }));
 
-  const shuffledFirst = filteredFirstStressArray.sort(
-    () => Math.random() - Math.random()
-  );
-  const shuffledSecond = secondStressArray.sort(
-    () => Math.random() - Math.random()
-  );
+  const shuffledFirst = shuffle(filteredFirstStressArray);
+  const shuffledSecond = shuffle(secondStressArray);
 
   return [...shuffledFirst.slice(0, 6), ...shuffledSecond.slice(0, 6)];
 }
