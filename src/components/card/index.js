@@ -12,7 +12,7 @@ export default function Card({
 			<button class={style.front} onClick={onClick}>
 				{word}
 			</button>
-			<div class={style.back}></div>
+			<div class={style.back}>{word}</div>
 		</div>
 	);
 }

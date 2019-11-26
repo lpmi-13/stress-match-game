@@ -43,8 +43,10 @@
 
 .card[data-stress-status="MATCHED"] .back{
   background-color: hsl(101, 70%, 55%);
+  color: #000000;
 }
 
 .card[data-stress-status="UNMATCHED"] .back {
   background: hsl(0, 91%, 42%);
+  color: #000000;
 }
