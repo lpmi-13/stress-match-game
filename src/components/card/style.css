@@ -11,6 +11,7 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   border-radius: 6px;
@@ -28,6 +29,10 @@
 	.card .front {
     font-size: 0.825rem;
 	}
+}
+
+.word {
+  margin-bottom: 0.75em;
 }
 
 .card .front {

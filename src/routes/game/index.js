@@ -106,6 +106,7 @@ export default class Game extends Component {
 					{state.deck.map(item => (
 						<Card
 						onClick={this.createCardClickListener(item)}
+						stress={stressDotMap(item.values.stress)}
 						stressStatus={this.getCardStressStatus(item)}
 						word={item.values.word}
 						/>
