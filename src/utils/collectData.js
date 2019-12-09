@@ -4,6 +4,7 @@ import shuffle from './shuffle';
 export default function collectData(stressPattern) {
   const stressArray = Object.keys(data);
   const stressIndex = stressArray.indexOf(stressPattern.stress);
+  const syllablesInFirstPattern = stressPattern.stress.length;
 
   const firstStressArray = data[stressPattern.stress].map(word => ({
     word,
@@ -15,9 +16,12 @@ export default function collectData(stressPattern) {
   );
 
   // get a stress pattern that's not the one we selected
+  // also use same number of syllables for the distractor items
   let number = stressIndex;
-  while (number === stressIndex) {
+  let syllablesInSecondPattern = 0;
+  while (number === stressIndex || syllablesInFirstPattern !== syllablesInSecondPattern) {
     number = Math.floor(Math.random() * Math.floor(stressArray.length));
+    syllablesInSecondPattern = stressArray[number].length;
   }
 
   const secondStressSound = stressArray[number];
