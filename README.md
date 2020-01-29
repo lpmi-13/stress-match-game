@@ -24,6 +24,14 @@ The patterns are as follows:
 ## local dev
 `npm start`
 
+## simple security testing - locally
+
+(uses `is-website-vulnerable`)
+
+- first, build the docker container locally using the information at https://github.com/lirantal/is-website-vulnerable
+
+- then just run `npm run test:security`, which will use the container you just built
+
 ## production build (recommended to deploy on netlify
 `npm run build`
 
