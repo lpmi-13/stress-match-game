@@ -11,7 +11,7 @@
     "dev": "preact watch -p 5000",
     "lint": "eslint src",
     "docker:security": "docker run --rm -e SCAN_URL=\"http://192.168.0.12:5000\" lirantal/is-website-vulnerable:latest",
-    "test:security": "npx start-server-and-test start http://localhost:5000 docker:security",
+    "test:security": "start-server-and-test start http://localhost:5000 docker:security",
     "prettier": "prettier --print-width 80 --single-quote --trailing-comma es5 --write src/**/*.js",
     "test": "jest"
   },
@@ -119,6 +119,7 @@
     "sinon": "^4.2.1",
     "sinon-chai": "^2.9.0",
     "source-map-loader": "^0.2.1",
+    "start-server-and-test": "^1.10.11",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.0",
     "webpack": "^3.0.0",

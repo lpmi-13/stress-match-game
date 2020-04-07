@@ -106,8 +106,8 @@
 
 @media (min-width:1100px) {
 	.grid {
-		grid-template-columns: repeat(3, 17em);
-		grid-template-rows: repeat(4, 9.75em);
-		grid-gap: 0.75em;
+	  grid-template-columns: repeat(3, 13.25em);
+	  grid-template-rows: repeat(4, 8em);
+	  grid-gap: 1.5em;
 	}
 }
