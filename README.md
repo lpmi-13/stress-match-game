@@ -22,7 +22,7 @@ The patterns are as follows:
 
 
 ## local dev
-`npm start`
+`npm install && npm start`
 
 ## simple security testing - locally
 
@@ -32,7 +32,7 @@ The patterns are as follows:
 
 - then just run `npm run test:security`, which will use the container you just built
 
-## production build (recommended to deploy on netlify
+## production build (recommended to deploy on netlify)
 `npm run build`
 
 
