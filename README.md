@@ -28,9 +28,7 @@ The patterns are as follows:
 
 (uses `is-website-vulnerable`)
 
-- first, build the docker container locally using the information at https://github.com/lirantal/is-website-vulnerable
-
-- then just run `npm run test:security`, which will use the container you just built
+`npm run test:security`, which pulls the latest image for `lirantai/is-website-vulnerable` and runs inside the container.
 
 ## production build (recommended to deploy on netlify)
 `npm run build`
