@@ -1,7 +1,7 @@
-node_modules
-/build
-/coverage
-/*.log
-*.lock
-
-package-lock.json
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+*.log
+.DS_Store

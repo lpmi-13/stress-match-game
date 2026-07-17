@@ -1,39 +1,68 @@
 # Stress Match Game
 
-A follow-on to the wildly successful [rhyme-match-game](https://github.com/lpmi-13/rhyme-match-game),
-this uses the Academic Word List (Coxhead, 2000) as the basis for matching which
-words have similar stress patterns. It uses Preact because awesome!
+Stress Match is a static English-learning game for noticing word stress. Learners choose a spoken
+rhythm, use a reference word to hear its shape, and find six words with the same stress pattern
+before making three misses.
 
-## patterns available in the app
+The word set is based on the Academic Word List (Coxhead, 2000). The application has no runtime API,
+database, credentials, or server process.
 
-The patterns are as follows:
+## Stack
 
-- STRESSED, unstressed
-(example: colleague)
+- Node.js 24 and npm 11
+- Vite 8 and strict TypeScript 7
+- Vitest for word-data and game-domain tests
+- Playwright with axe-core for desktop, mobile, interaction, and accessibility checks
+- Biome for linting and formatting
 
-- unstressed, STRESSED
-(example: persist)
+## Development
 
-- STRESSED, unstressed, unstressed
-(example: marginal)
+Install the Node version declared in `.nvmrc`, then run:
 
-- unstressed, STRESSED, unstressed
-(example: adjacent)
+```sh
+npm ci
+npm run dev
+```
 
+Useful commands:
 
-## local dev
-`npm install && npm start`
+```sh
+npm run lint       # static analysis
+npm test           # unit tests
+npm run test:e2e   # browser and accessibility checks
+npm run build      # type-check and create dist/
+npm run check      # lint, tests, build, and formatting
+```
 
-## simple security testing - locally
+## Game behaviour
 
-(uses `is-website-vulnerable`)
+- Five two- and three-syllable stress patterns are available.
+- Every round starts with one reference word and a shuffled deck of twelve words.
+- Six cards match the reference pattern; six use another pattern with the same syllable count.
+- Matching cards reveal the same rhythm. Other cards reveal their different rhythm.
+- Finding all six matches completes the round. Three misses end it.
+- A new round samples a fresh reference word and deck.
+- The interface supports keyboard play, reduced-motion preferences, and small mobile screens.
 
-`npm run test:security`, which pulls the latest image for `lirantai/is-website-vulnerable` and runs inside the container.
+## Deployment
 
-## production build (recommended to deploy on netlify)
-`npm run build`
+`npm run build` creates a static site in `dist/`. Vite emits relative asset URLs so the build works at
+the site root or under the existing `/stress-game/` path. `netlify.toml` configures the production
+build, immutable hashed assets, and restrictive security headers.
 
+The canonical production URL is <https://stress-match-game.netlify.app/>. Open Graph and Twitter
+Card metadata use the committed 1200 × 630 PNG in `static/`; the adjacent SVG is its editable source.
 
-based off the work of Seif Ghezala in [this article](https://hackernoon.com/how-to-create-a-pwa-game-using-preact-in-5-steps-tutorial-c8b177037c80).
+## Project layout
 
-This will eventually be an offline first way for EFL students to practice identifying words that contain similar stress patterns.
+```text
+src/data/    Academic Word List entries grouped by stress pattern
+src/domain/  deterministic deck creation and round state
+src/ui/      DOM application and interaction state
+tests/       Vitest data and domain checks
+e2e/         Playwright interaction, mobile, and accessibility checks
+```
+
+## Licence
+
+The application code is available under the [MIT Licence](LICENSE.txt).

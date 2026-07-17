@@ -1,137 +1,36 @@
 {
-  "private": false,
-  "name": "stress-out",
-  "homepage": "https://www.grammarbuffet.org/stress-game/",
-  "version": "0.0.1",
+  "name": "stress-match-game",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An accessible word-stress matching game for English language learners.",
+  "author": "Adam Leskis",
   "license": "MIT",
   "scripts": {
-    "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
-    "build": "rm -rf ./build && preact build --template src/index.html -p",
-    "serve": "npm run build && preact serve",
-    "dev": "preact watch -p 5000",
-    "lint": "eslint src",
-    "docker:security": "docker run --rm -e SCAN_URL=\"http://$(ip -4 addr show docker0 | grep -Po 'inet \\K[\\d.]+'):5000\" lirantal/is-website-vulnerable:latest",
-    "test:security": "start-server-and-test start http://localhost:5000 docker:security",
-    "prettier": "prettier --print-width 80 --single-quote --trailing-comma es5 --write src/**/*.js",
-    "test": "jest"
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run test && npm run build && npm run format:check"
   },
   "engines": {
-    "node": ">=6"
+    "node": ">=24.0.0 <25",
+    "npm": ">=11.6.1 <13"
   },
-  "jest": {
-    "setupFiles": [
-      "./tests/setup.js"
-    ],
-    "testURL": "http://localhost:8080",
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "identity-obj-proxy",
-      "^react$": "preact-compat",
-      "^react-dom$": "preact-compat"
-    },
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}"
-    ]
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "parser": "babel-eslint",
-    "globals": {
-      "Promise": 1
-    },
-    "plugins": [
-      "react"
-    ],
-    "settings": {
-      "react": {
-        "pragma": "h"
-      }
-    },
-    "env": {
-      "node": true,
-      "browser": true
-    },
-    "rules": {
-      "no-console": 1,
-      "no-empty": 0,
-      "semi": 2,
-      "keyword-spacing": 2,
-      "react/no-string-refs": 2,
-      "react/no-find-dom-node": 2,
-      "react/no-is-mounted": 2,
-      "react/jsx-no-comment-textnodes": 2,
-      "react/jsx-curly-spacing": 2,
-      "react/jsx-no-undef": 2,
-      "react/jsx-uses-react": 2,
-      "react/jsx-uses-vars": 2
-    }
-  },
-  "eslintIgnore": [
-    "build/*"
-  ],
+  "packageManager": "npm@11.6.1",
   "devDependencies": {
-    "autoprefixer": "^8.0.0",
-    "babel": "^6.5.2",
-    "babel-core": "^6.24.0",
-    "babel-eslint": "^8.2.2",
-    "babel-jest": "^20.0.0",
-    "babel-loader": "^7.0.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-react-jsx": "^6.8.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.24.0",
-    "babel-runtime": "^6.11.6",
-    "chai": "^4.0.2",
-    "copy-webpack-plugin": "^4.0.1",
-    "core-js": "^2.4.1",
-    "cross-env": "^5.0.1",
-    "css-loader": "^0.28.0",
-    "eslint": "^4.1.0",
-    "eslint-plugin-jest": "^21.7.1",
-    "eslint-plugin-react": "^7.0.0",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "file-loader": "^1.1.7",
-    "html-webpack-plugin": "^3.0.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^20.0.0",
-    "json-loader": "^0.5.4",
-    "less": "^3.0.0",
-    "less-loader": "^4.0.3",
-    "mkdirp": "^0.5.1",
-    "ncp": "^2.0.0",
-    "offline-plugin": "^5.0.0",
-    "postcss-loader": "^2.0.3",
-    "preact-cli": "^2.2.1",
-    "preact-jsx-chai": "^3.0.0",
-    "prettier": "^1.16.4",
-    "raw-loader": "^0.5.1",
-    "regenerator-runtime": "^0.10.3",
-    "replace-bundle-webpack-plugin": "^1.0.0",
-    "script-ext-html-webpack-plugin": "^2.0.0",
-    "sinon": "^4.2.1",
-    "sinon-chai": "^2.9.0",
-    "source-map-loader": "^0.2.1",
-    "start-server-and-test": "^1.10.11",
-    "style-loader": "^0.21.0",
-    "url-loader": "^1.0.0",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^3.1.12"
-  },
-  "dependencies": {
-    "if-env": "^1.0.4",
-    "preact": "^10.0.0",
-    "preact-render-to-string": "^5.0.0",
-    "preact-router": "^3.0.0",
-    "promise-polyfill": "^7.0.1",
-    "proptypes": "^1.0.0",
-    "serve": "^11.3.2"
+    "@axe-core/playwright": "^4.12.1",
+    "@biomejs/biome": "^2.5.3",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "jsdom": "^29.1.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.4",
+    "vitest": "^4.1.10"
   }
 }
