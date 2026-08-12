@@ -4,9 +4,7 @@ import { expect, test } from '@playwright/test';
 test('chooses a rhythm and starts a complete matching round', async ({ page }) => {
   await page.goto('/');
 
-  await expect(
-    page.getByRole('heading', { name: 'Hear the shape. Match the stress.' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Stress Match' })).toBeVisible();
   await expect(page.getByRole('radio')).toHaveCount(5);
   await page.getByRole('radio', { name: /Middle syllable/i }).check();
   await page.getByRole('button', { name: /Start matching/i }).click();
@@ -41,9 +39,9 @@ test('ends after three misses and supports choosing another pattern', async ({ p
   const misses = page.locator('.word-card[data-match="false"]');
   for (let index = 0; index < 3; index += 1) await misses.nth(index).click();
 
-  await expect(page.getByRole('heading', { name: 'Reset. Listen. Try again.' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Try that rhythm again.' })).toBeVisible();
   await page.getByRole('button', { name: 'Choose another pattern' }).click();
-  await expect(page.getByRole('group', { name: 'Choose a rhythm' })).toBeVisible();
+  await expect(page.getByRole('group', { name: 'Choose a stress pattern' })).toBeVisible();
 });
 
 test('has no detectable accessibility violations on the landing page or game', async ({ page }) => {

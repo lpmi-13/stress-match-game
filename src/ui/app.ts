@@ -30,80 +30,58 @@ export class StressMatchApp {
   private renderLanding(): void {
     this.clearResultTimer();
     this.round = null;
-    document.body.className = '';
+    document.body.className = 'is-menu';
     document.title = 'Stress Match — English word-stress practice';
 
     this.root.innerHTML = `
-      <a class="skip-link" href="#main-content">Skip to pattern choices</a>
-      <div class="site-shell">
-        <header class="site-header">
-          <a class="brand" href="#main-content" aria-label="Stress Match home">
-            <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>Stress Match</span>
-          </a>
-          <span class="arcade-score" aria-hidden="true"><b>1UP</b> HI-SCORE&nbsp;00600</span>
-          <a class="header-link" href="#how-to-play">How to play <span aria-hidden="true">↓</span></a>
-        </header>
+      <a class="skip-link" href="#pattern-form">Skip to pattern choices</a>
+      <div class="start-view">
+        <main class="start-screen" id="main-content">
+          <section class="start-panel" aria-labelledby="page-title">
+            <header class="start-title">
+              <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+              <div>
+                <p>Word-stress game</p>
+                <h1 id="page-title">Stress Match</h1>
+              </div>
+            </header>
 
-        <main class="landing-main" id="main-content">
-          <section class="hero-copy" aria-labelledby="page-title">
-            <p class="arcade-callout" aria-hidden="true">Round 01 // select your rhythm</p>
-            <p class="eyebrow"><span>Arcade pronunciation practice</span> Academic Word List</p>
-            <h1 id="page-title">Hear the shape.<em>Match the stress.</em></h1>
-            <p class="hero-intro">
-              Build an instinct for English word stress by finding six words with the same spoken
-              rhythm.
-            </p>
+            <p class="start-instruction">Choose the strongest beat, then find the words that match.</p>
 
             <form id="pattern-form">
               <fieldset class="pattern-picker">
-                <legend>Choose a rhythm</legend>
-                <div class="pattern-options">
-                  ${this.selections.map((selection) => this.patternOption(selection)).join('')}
+                <legend>Choose a stress pattern</legend>
+                <div class="pattern-groups">
+                  <div class="pattern-group">
+                    <p>Two syllables</p>
+                    <div class="pattern-options pattern-options-two">
+                      ${this.selections
+                        .filter((selection) => selection.pattern.length === 2)
+                        .map((selection) => this.patternOption(selection))
+                        .join('')}
+                    </div>
+                  </div>
+                  <div class="pattern-group">
+                    <p>Three syllables</p>
+                    <div class="pattern-options pattern-options-three">
+                      ${this.selections
+                        .filter((selection) => selection.pattern.length === 3)
+                        .map((selection) => this.patternOption(selection))
+                        .join('')}
+                    </div>
+                  </div>
                 </div>
               </fieldset>
 
-              <div class="start-row">
-                <button class="primary-action" type="submit">
-                  Start matching <span aria-hidden="true">▶</span>
-                </button>
-                <span id="round-summary">12 cards · find 6 matches · 3 misses allowed</span>
+              <div class="start-action">
+                <span>6 matches · 3 misses</span>
+                <button type="submit">Start matching <span aria-hidden="true">→</span></button>
               </div>
             </form>
+
+            <p class="start-source">Words adapted from the Academic Word List.</p>
           </section>
-
-          <aside class="rhythm-board" aria-label="Selected rhythm preview">
-            <div class="board-topline">
-              <span><i aria-hidden="true"></i> Rhythm monitor</span>
-              <span id="preview-syllables"></span>
-            </div>
-            <div class="board-screen">
-              <p>Reference word</p>
-              <strong id="preview-word"></strong>
-              <div id="preview-marks"></div>
-              <span id="preview-name"></span>
-            </div>
-            <div class="beat-track" id="preview-beats" aria-hidden="true"></div>
-            <p class="board-note">A larger beat marks the stressed syllable.</p>
-          </aside>
         </main>
-
-        <section class="how-to" id="how-to-play" aria-labelledby="how-title">
-          <div>
-            <p class="section-number">01</p>
-            <h2 id="how-title">One rhythm.<br />Twelve words.</h2>
-          </div>
-          <ol>
-            <li><span>Choose</span><p>Pick a two- or three-syllable stress pattern.</p></li>
-            <li><span>Compare</span><p>Say each word and listen for its strongest beat.</p></li>
-            <li><span>Match</span><p>Find all six matches before making three misses.</p></li>
-          </ol>
-        </section>
-
-        <footer class="site-footer">
-          <p>Made for focused English practice.</p>
-          <p>Word set adapted from the Academic Word List (Coxhead, 2000).</p>
-        </footer>
       </div>
     `;
     resetScroll();
@@ -113,14 +91,12 @@ export class StressMatchApp {
       const value = new FormData(form).get('pattern');
       if (typeof value === 'string' && isStressPattern(value)) {
         this.selectedPattern = value;
-        this.updatePreview();
       }
     });
     form.addEventListener('submit', (event) => {
       event.preventDefault();
       this.startRound(this.selectionFor(this.selectedPattern));
     });
-    this.updatePreview();
   }
 
   private patternOption(selection: PatternSelection): string {
@@ -130,26 +106,15 @@ export class StressMatchApp {
       <label class="pattern-option">
         <input type="radio" name="pattern" value="${selection.pattern}"${checked} />
         <span class="pattern-option-content">
-          <span class="pattern-meta">${copy.syllables}<b>${selection.pattern}</b></span>
+          <span class="pattern-meta">${copy.syllables}</span>
           <strong>${escapeHtml(selection.word)}</strong>
-          ${stressMarks(selection.pattern)}
-          <small>${copy.shortName}</small>
+          <span class="pattern-rhythm">
+            ${stressMarks(selection.pattern)}
+            <small>${copy.shortName}</small>
+          </span>
         </span>
       </label>
     `;
-  }
-
-  private updatePreview(): void {
-    const selection = this.selectionFor(this.selectedPattern);
-    const copy = PATTERN_COPY[selection.pattern];
-    element('#preview-word').textContent = selection.word;
-    element('#preview-marks').innerHTML = stressMarks(selection.pattern);
-    element('#preview-name').textContent = copy.name;
-    element('#preview-syllables').textContent = copy.syllables;
-    element('#preview-beats').innerHTML = selection.pattern
-      .split('')
-      .map((beat) => `<i class="${beat === '1' ? 'is-strong' : ''}"></i>`)
-      .join('');
   }
 
   private startRound(selection: PatternSelection): void {
@@ -160,48 +125,39 @@ export class StressMatchApp {
 
   private renderGame(): void {
     const round = this.requireRound();
-    const copy = PATTERN_COPY[round.selection.pattern];
     document.body.className = 'is-playing';
     document.title = `${round.selection.word} · Stress Match`;
 
     this.root.innerHTML = `
       <a class="skip-link" href="#word-grid">Skip to word cards</a>
-      <div class="game-screen" tabindex="-1">
+      <main class="game-screen" id="main-content" tabindex="-1">
         <header class="game-header">
-          <a class="brand brand-light" href="#" id="game-home" aria-label="Leave this round">
-            <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
-            <span>Stress Match</span>
-          </a>
-          <span class="arcade-score game-score" aria-hidden="true"><b>1UP</b> READY!</span>
+          <button class="back-button" type="button" id="change-pattern">
+            <span aria-hidden="true">←</span> Patterns
+          </button>
 
           <div class="target-lockup">
-            <span>Pattern to match</span>
+            <span>Match this rhythm</span>
             <h1 id="game-title">${escapeHtml(round.selection.word)}</h1>
             ${stressMarks(round.selection.pattern)}
           </div>
 
           <div class="game-stats" aria-label="Round progress">
-            <p><span>Matched</span><strong id="match-count">0 / 6</strong></p>
-            <p><span>Misses</span><strong id="miss-count">0 / 3</strong></p>
-            <button type="button" id="change-pattern">Change pattern</button>
+            <p><strong id="match-count">0 / 6</strong><span>matched</span></p>
+            <p><strong id="miss-count">0 / 3</strong><span>misses</span></p>
           </div>
         </header>
 
-        <main class="game-main">
-          <div class="game-brief">
-            <div>
-              <p>${copy.syllables} / ${round.selection.pattern}</p>
-              <h2>Which words share this rhythm?</h2>
-            </div>
-            <p class="feedback" id="feedback" role="status" aria-live="polite">
-              Say a word aloud, then tap it to check.
-            </p>
-          </div>
+        <section class="game-main" aria-labelledby="game-instructions">
+          <h2 class="visually-hidden" id="game-instructions">Which words share this rhythm?</h2>
+          <p class="feedback" id="feedback" role="status" aria-live="polite">
+            Select six words with the same strong beat.
+          </p>
 
           <div class="word-grid" id="word-grid">
             ${round.cards
               .map(
-                (cardItem, index) => `
+                (cardItem) => `
               <button
                 class="word-card"
                 type="button"
@@ -209,28 +165,18 @@ export class StressMatchApp {
                 data-match="${String(cardItem.pattern === round.selection.pattern)}"
                 aria-label="Check ${escapeHtml(cardItem.word)}"
               >
-                <span class="card-number">${String(index + 1).padStart(2, '0')}</span>
                 <strong>${escapeHtml(cardItem.word)}</strong>
-                <span class="card-hint">Tap to check</span>
+                <span class="card-hint" aria-hidden="true"></span>
               </button>
             `,
               )
               .join('')}
           </div>
-        </main>
-
-        <footer class="game-footer">
-          <p><span aria-hidden="true">●</span> Find all six matches</p>
-          <p>${stressDescription(round.selection.pattern)}</p>
-        </footer>
-      </div>
+        </section>
+      </main>
     `;
     resetScroll();
 
-    element<HTMLAnchorElement>('#game-home').addEventListener('click', (event) => {
-      event.preventDefault();
-      this.returnToLanding();
-    });
     element<HTMLButtonElement>('#change-pattern').addEventListener('click', () =>
       this.returnToLanding(),
     );
@@ -285,10 +231,10 @@ export class StressMatchApp {
     const feedback = element('#feedback');
 
     if (result.kind === 'match') {
-      feedback.textContent = `Match — ${result.card.word} shares the same strong beat.`;
+      feedback.textContent = `Match — ${result.card.word}.`;
       feedback.dataset.tone = 'success';
     } else {
-      feedback.textContent = `Different rhythm — listen again to ${result.card.word}.`;
+      feedback.textContent = `Different rhythm — ${result.card.word}.`;
       feedback.dataset.tone = 'error';
     }
   }
@@ -302,33 +248,25 @@ export class StressMatchApp {
 
     this.root.innerHTML = `
       <main class="result-screen" id="main-content">
-        <div class="result-card" data-result="${round.status}">
-          <div class="result-signal" aria-hidden="true">
-            <i></i><i></i><i></i><i></i><i></i>
-          </div>
-          <p class="eyebrow"><span>${won ? 'Pattern complete' : 'Round complete'}</span> ${round.selection.pattern}</p>
-          <h1>${won ? 'Rhythm locked in.' : 'Reset. Listen. Try again.'}</h1>
+        <section class="result-panel" data-result="${round.status}" aria-labelledby="result-title">
+          <p class="result-kicker">${won ? 'Pattern complete' : 'Round over'}</p>
+          <strong class="result-score">${round.matches} / 6</strong>
+          <h1 id="result-title">${won ? 'Rhythm locked in.' : 'Try that rhythm again.'}</h1>
           <p class="result-message">
             ${
               won
                 ? `You found all six words that match “${escapeHtml(round.selection.word)}”.`
-                : `Three words followed a different rhythm. You still found ${round.matches} of the six matches.`
+                : `You found ${round.matches} matches before three misses.`
             }
           </p>
 
-          <dl class="result-stats">
-            <div><dt>Matches</dt><dd>${round.matches} / 6</dd></div>
-            <div><dt>Misses</dt><dd>${round.misses} / 3</dd></div>
-            <div><dt>Pattern</dt><dd>${round.selection.pattern}</dd></div>
-          </dl>
-
           <div class="result-actions">
             <button class="primary-action" type="button" id="play-again">
-              Play this rhythm <span aria-hidden="true">↻</span>
+              Play again <span aria-hidden="true">↻</span>
             </button>
             <button class="text-action" type="button" id="choose-pattern">Choose another pattern</button>
           </div>
-        </div>
+        </section>
       </main>
     `;
     resetScroll();
