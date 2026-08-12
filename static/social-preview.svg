@@ -1,83 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
   <title id="title">Stress Match</title>
-  <desc id="description">Hear the shape. Match the stress.</desc>
+  <desc id="description">Choose the strongest beat, then find the words that match.</desc>
   <defs>
-    <pattern id="paper-grid" width="16" height="16" patternUnits="userSpaceOnUse">
-      <path d="M16 0H0v16" fill="none" stroke="#516aa2" stroke-opacity=".09"/>
-    </pattern>
-    <pattern id="screen-grid" width="14" height="14" patternUnits="userSpaceOnUse">
-      <path d="M14 0H0v14" fill="none" stroke="#9bd9e5" stroke-opacity=".07"/>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0v40" fill="none" stroke="#ffffff" stroke-opacity=".025"/>
     </pattern>
   </defs>
 
-  <rect width="1200" height="630" fill="#f2eee3"/>
-  <rect width="1200" height="630" fill="url(#paper-grid)"/>
-  <circle cx="1120" cy="40" r="235" fill="#9bd9e5" fill-opacity=".25"/>
-  <circle cx="80" cy="610" r="220" fill="#d7f45b" fill-opacity=".16"/>
+  <rect width="1200" height="630" fill="#0d1714"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
 
-  <rect width="1200" height="92" fill="#17231d"/>
-  <rect y="88" width="1200" height="4" fill="#516aa2"/>
-  <g transform="translate(58 20)">
-    <rect x="5" y="5" width="56" height="56" fill="#ff7652"/>
-    <rect width="56" height="56" fill="#fffdf6" stroke="#17231d" stroke-width="4"/>
-    <rect x="13" y="29" width="7" height="14" fill="#17231d"/>
-    <rect x="25" y="17" width="7" height="26" fill="#ff7652"/>
-    <rect x="37" y="25" width="7" height="18" fill="#17231d"/>
-    <text x="76" y="37" fill="#fffdf6" font-family="DejaVu Sans Mono,monospace" font-size="24" font-weight="700" letter-spacing="1">STRESS MATCH</text>
-  </g>
-  <text x="1140" y="39" text-anchor="end" fill="#e7a61a" font-family="DejaVu Sans Mono,monospace" font-size="13" font-weight="700">1UP</text>
-  <text x="1140" y="63" text-anchor="end" fill="#9bd9e5" font-family="DejaVu Sans Mono,monospace" font-size="12">HI-SCORE 00600</text>
+  <rect x="128" y="70" width="944" height="490" rx="18" fill="#172621" stroke="#fffaf1" stroke-opacity=".18"/>
 
-  <g transform="translate(62 142)">
-    <rect width="332" height="36" fill="#d7f45b"/>
-    <text x="15" y="24" fill="#17231d" font-family="DejaVu Sans Mono,monospace" font-size="13" font-weight="700" letter-spacing="1">ARCADE PRONUNCIATION PRACTICE</text>
-    <text x="0" y="127" fill="#17231d" font-family="Georgia,serif" font-size="74">Hear the shape.</text>
-    <text x="4" y="207" fill="#ff5738" font-family="DejaVu Sans Mono,monospace" font-size="44" font-weight="700">MATCH THE STRESS.</text>
-    <rect x="8" y="218" width="520" height="7" fill="#516aa2" fill-opacity=".35"/>
-    <text x="2" y="275" fill="#4b5951" font-family="Georgia,serif" font-size="24">Find six words with the same spoken rhythm.</text>
-
-    <g transform="translate(4 326)">
-      <rect x="6" y="6" width="222" height="64" fill="#ff7652"/>
-      <rect width="222" height="64" fill="#17231d" stroke="#17231d" stroke-width="3"/>
-      <text x="22" y="40" fill="#fffdf6" font-family="DejaVu Sans Mono,monospace" font-size="14" font-weight="700">START MATCHING  ▶</text>
-    </g>
+  <g transform="translate(170 106)">
+    <rect width="58" height="58" rx="10" fill="#fffaf1"/>
+    <path d="M0 50h58v8H10A10 10 0 0 1 0 48z" fill="#ff7652"/>
+    <circle cx="16" cy="29" r="4" fill="none" stroke="#0d1714" stroke-width="2"/>
+    <circle cx="29" cy="29" r="8" fill="#0d1714"/>
+    <circle cx="45" cy="29" r="4" fill="none" stroke="#0d1714" stroke-width="2"/>
+    <text x="78" y="18" fill="#8bd8e4" font-family="Arial,sans-serif" font-size="12" font-weight="800" letter-spacing="2">WORD-STRESS GAME</text>
+    <text x="78" y="55" fill="#fffaf1" font-family="Georgia,serif" font-size="45">Stress Match</text>
   </g>
 
-  <g transform="translate(720 132)">
-    <rect x="10" y="10" width="422" height="422" fill="#9bd9e5"/>
-    <rect width="422" height="422" fill="#17231d" stroke="#516aa2" stroke-width="5"/>
-    <rect x="5" y="5" width="412" height="412" fill="url(#screen-grid)"/>
-    <text x="24" y="36" fill="#d7f45b" font-family="DejaVu Sans Mono,monospace" font-size="12" font-weight="700">PATTERN TO MATCH</text>
-    <text x="398" y="36" text-anchor="end" fill="#9bd9e5" font-family="DejaVu Sans Mono,monospace" font-size="12">2 SYLLABLES / 10</text>
-    <line x1="22" y1="54" x2="400" y2="54" stroke="#516aa2" stroke-width="3"/>
-    <text x="28" y="103" fill="#e7a61a" font-family="DejaVu Sans Mono,monospace" font-size="25" font-weight="700">COLLEAGUE</text>
-    <circle cx="35" cy="139" r="13" fill="#ff7652"/>
-    <circle cx="72" cy="139" r="6" fill="none" stroke="#fffdf6" stroke-width="3" opacity=".65"/>
+  <text x="170" y="211" fill="#d7dfdb" font-family="Georgia,serif" font-size="21">Choose the strongest beat, then find the words that match.</text>
+  <text x="170" y="248" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="12" font-weight="800" letter-spacing="2">CHOOSE A STRESS PATTERN</text>
 
-    <g transform="translate(24 177)">
-      <g>
-        <rect x="5" y="5" width="178" height="82" fill="#080c0a"/>
-        <rect width="178" height="82" fill="#202a25" stroke="#516aa2" stroke-width="3"/>
-        <text x="89" y="48" text-anchor="middle" fill="#fffdf6" font-family="DejaVu Sans Mono,monospace" font-size="17" font-weight="700">CULTURE</text>
-      </g>
-      <g transform="translate(194)">
-        <rect x="5" y="5" width="178" height="82" fill="#638321"/>
-        <rect width="178" height="82" fill="#d7f45b" stroke="#d7f45b" stroke-width="3"/>
-        <text x="89" y="48" text-anchor="middle" fill="#17231d" font-family="DejaVu Sans Mono,monospace" font-size="17" font-weight="700">EXPERT</text>
-      </g>
-      <g transform="translate(0 104)">
-        <rect x="5" y="5" width="178" height="82" fill="#080c0a"/>
-        <rect width="178" height="82" fill="#202a25" stroke="#516aa2" stroke-width="3"/>
-        <text x="89" y="48" text-anchor="middle" fill="#fffdf6" font-family="DejaVu Sans Mono,monospace" font-size="17" font-weight="700">VERSION</text>
-      </g>
-      <g transform="translate(194 104)">
-        <rect x="5" y="5" width="178" height="82" fill="#8d2f22"/>
-        <rect width="178" height="82" fill="#ff7652" stroke="#ffb09b" stroke-width="3"/>
-        <text x="89" y="48" text-anchor="middle" fill="#17231d" font-family="DejaVu Sans Mono,monospace" font-size="17" font-weight="700">PERSIST</text>
-      </g>
-    </g>
+  <g transform="translate(170 266)">
+    <rect width="164" height="125" rx="8" fill="#15241f" stroke="#53635d"/>
+    <text x="14" y="25" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1">2 SYLLABLES</text>
+    <text x="14" y="61" fill="#fffaf1" font-family="Georgia,serif" font-size="20">collapsed</text>
+    <circle cx="18" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <circle cx="34" cy="97" r="8" fill="#d7f45b"/>
+    <text x="150" y="101" text-anchor="end" fill="#c2ceca" font-family="Arial,sans-serif" font-size="9">Second syllable</text>
   </g>
 
-  <rect y="594" width="1200" height="36" fill="#17231d"/>
-  <text x="60" y="617" fill="#9bd9e5" font-family="DejaVu Sans Mono,monospace" font-size="12" font-weight="700" letter-spacing="2">HEAR THE SHAPE  ◆  MATCH THE STRESS  ◆  BUILD THE RHYTHM</text>
+  <g transform="translate(343 266)">
+    <rect width="164" height="125" rx="8" fill="#101d19" stroke="#fffaf1"/>
+    <path d="M8 118h148a8 8 0 0 1-8 7H16a8 8 0 0 1-8-7z" fill="#ff7652"/>
+    <text x="14" y="25" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1">2 SYLLABLES</text>
+    <text x="14" y="61" fill="#fffaf1" font-family="Georgia,serif" font-size="20">constant</text>
+    <circle cx="18" cy="97" r="8" fill="#d7f45b"/>
+    <circle cx="36" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <text x="150" y="101" text-anchor="end" fill="#c2ceca" font-family="Arial,sans-serif" font-size="9">First syllable</text>
+  </g>
+
+  <g transform="translate(527 266)">
+    <rect width="164" height="125" rx="8" fill="#15241f" stroke="#53635d"/>
+    <text x="14" y="25" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1">3 SYLLABLES</text>
+    <text x="14" y="61" fill="#fffaf1" font-family="Georgia,serif" font-size="20">unresolved</text>
+    <circle cx="18" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <circle cx="32" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <circle cx="48" cy="97" r="8" fill="#d7f45b"/>
+    <text x="150" y="101" text-anchor="end" fill="#c2ceca" font-family="Arial,sans-serif" font-size="9">Third syllable</text>
+  </g>
+
+  <g transform="translate(700 266)">
+    <rect width="164" height="125" rx="8" fill="#15241f" stroke="#53635d"/>
+    <text x="14" y="25" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1">3 SYLLABLES</text>
+    <text x="14" y="61" fill="#fffaf1" font-family="Georgia,serif" font-size="20">convinces</text>
+    <circle cx="18" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <circle cx="34" cy="97" r="8" fill="#d7f45b"/>
+    <circle cx="52" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <text x="150" y="101" text-anchor="end" fill="#c2ceca" font-family="Arial,sans-serif" font-size="9">Middle syllable</text>
+  </g>
+
+  <g transform="translate(873 266)">
+    <rect width="164" height="125" rx="8" fill="#15241f" stroke="#53635d"/>
+    <text x="14" y="25" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="10" font-weight="800" letter-spacing="1">3 SYLLABLES</text>
+    <text x="14" y="61" fill="#fffaf1" font-family="Georgia,serif" font-size="20">positive</text>
+    <circle cx="18" cy="97" r="8" fill="#d7f45b"/>
+    <circle cx="36" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <circle cx="50" cy="97" r="4" fill="none" stroke="#fffaf1" stroke-opacity=".7"/>
+    <text x="150" y="101" text-anchor="end" fill="#c2ceca" font-family="Arial,sans-serif" font-size="9">First syllable</text>
+  </g>
+
+  <text x="170" y="454" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="11" font-weight="800" letter-spacing="1.5">6 MATCHES  ·  3 MISSES</text>
+  <g transform="translate(815 415)">
+    <rect width="222" height="58" fill="#ff7652"/>
+    <text x="18" y="36" fill="#0d1714" font-family="Arial,sans-serif" font-size="11" font-weight="900" letter-spacing="1.2">START MATCHING</text>
+    <text x="204" y="36" text-anchor="end" fill="#0d1714" font-family="Arial,sans-serif" font-size="20" font-weight="700">→</text>
+  </g>
+
+  <line x1="170" y1="500" x2="1037" y2="500" stroke="#ffffff" stroke-opacity=".1"/>
+  <text x="170" y="526" fill="#a9b8b1" font-family="Arial,sans-serif" font-size="10">Words adapted from the Academic Word List.</text>
 </svg>
