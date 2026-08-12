@@ -50,7 +50,7 @@ npm run check      # lint, tests, build, and formatting
 the site root or under the existing `/stress-game/` path. `netlify.toml` configures the production
 build, immutable hashed assets, and restrictive security headers.
 
-The canonical production URL is <https://stress-match-game.netlify.app/>. Open Graph and Twitter
+The canonical production URL is <https://stress-match.netlify.app/>. Open Graph and Twitter
 Card metadata use the committed 1200 × 630 PNG in `static/`; the adjacent SVG is its editable source.
 
 ## Project layout

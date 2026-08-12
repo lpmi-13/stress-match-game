@@ -59,15 +59,15 @@ test('publishes canonical Open Graph and Twitter Card metadata', async ({ page }
 
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
-    'https://stress-match-game.netlify.app/',
+    'https://stress-match.netlify.app/',
   );
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
     'content',
-    'https://stress-match-game.netlify.app/',
+    'https://stress-match.netlify.app/',
   );
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
     'content',
-    'https://stress-match-game.netlify.app/social-preview.png',
+    'https://stress-match.netlify.app/social-preview.png',
   );
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
     'content',
@@ -75,7 +75,7 @@ test('publishes canonical Open Graph and Twitter Card metadata', async ({ page }
   );
   await expect(page.locator('meta[name="twitter:image"]')).toHaveAttribute(
     'content',
-    'https://stress-match-game.netlify.app/social-preview.png',
+    'https://stress-match.netlify.app/social-preview.png',
   );
 
   const preview = await page.request.get('/social-preview.png');
