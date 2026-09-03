@@ -1,8 +1,8 @@
 {
   "version": 1,
   "provider": "edge-tts",
-  "ffmpegPreset": "mono MP3, 24 kHz, 48 kbps, loudnorm I=-18 LRA=7 TP=-2",
-  "generatedAt": "2026-09-03T20:25:41.182Z",
+  "ffmpegPreset": "mono MP3, 24 kHz, 48 kbps, loudness-normalised to I=-18 LUFS with a -2 dBTP ceiling",
+  "generatedAt": "2026-09-03T21:12:47.471Z",
   "voices": [
     {
       "id": "ava",

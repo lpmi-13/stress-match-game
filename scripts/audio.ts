@@ -24,9 +24,17 @@ const mastersDir = path.join(root, 'generated/audio-masters');
 const deployDir = path.join(root, 'static/audio');
 const manifestPath = path.join(deployDir, 'manifest.json');
 
-// ffmpeg normalisation preset shared with napkin-chats: mono, 24 kHz, 48 kbps MP3,
-// loudness-normalised so every voice and word plays back at a comparable level.
-const FFMPEG_PRESET = 'mono MP3, 24 kHz, 48 kbps, loudnorm I=-18 LRA=7 TP=-2';
+// ffmpeg normalisation preset: mono, 24 kHz, 48 kbps MP3, loudness-normalised so every
+// voice and word plays back at a comparable level. We measure each clip's integrated
+// loudness and true peak, then apply a single fixed gain toward TARGET_I, capped so the
+// true peak never exceeds TARGET_TP. This is linear loudness normalisation done by hand
+// rather than via loudnorm's built-in application: ffmpeg 4.4's loudnorm has a bug where,
+// whenever the gain needed to reach the target loudness would push the true peak past the
+// TP ceiling, it wildly *attenuates* the clip (single words with sharp plosives/sibilants
+// landed ~17 dB too quiet). Measuring then applying `volume` sidesteps that entirely.
+const TARGET_I = -18; // LUFS, integrated loudness target
+const TARGET_TP = -2; // dBTP, true-peak ceiling
+const FFMPEG_PRESET = `mono MP3, 24 kHz, 48 kbps, loudness-normalised to I=${TARGET_I} LUFS with a ${TARGET_TP} dBTP ceiling`;
 
 interface Task {
   word: string;
@@ -110,7 +118,36 @@ async function synthesiseMaster(task: Task): Promise<void> {
   throw lastError;
 }
 
+// Measure a master's EBU R128 integrated loudness and true peak. loudnorm's first-pass
+// *measurement* is reliable here (it is the built-in *application* that misbehaves — see
+// FFMPEG_PRESET), and it reports both numbers we need in one JSON pass.
+async function measureLoudness(file: string): Promise<{ inputI: number; inputTp: number }> {
+  const { stderr } = await execFileAsync('ffmpeg', [
+    '-hide_banner',
+    '-i',
+    file,
+    '-af',
+    'loudnorm=I=-18:LRA=7:TP=-2:print_format=json',
+    '-f',
+    'null',
+    '-',
+  ]);
+  const match = /\{[^}]*"input_i"[^}]*\}/s.exec(stderr);
+  const parsed = match ? (JSON.parse(match[0]) as Record<string, string>) : {};
+  const inputI = Number.parseFloat(parsed.input_i ?? '');
+  const inputTp = Number.parseFloat(parsed.input_tp ?? '');
+  return { inputI, inputTp };
+}
+
 async function normaliseToDeploy(task: Task): Promise<void> {
+  const { inputI, inputTp } = await measureLoudness(task.masterPath);
+  // Gain toward the loudness target, capped so the true peak stays under the ceiling.
+  // If a measurement came back non-finite (e.g. near-silent clip), fall back to no gain.
+  const gain =
+    Number.isFinite(inputI) && Number.isFinite(inputTp)
+      ? Math.min(TARGET_I - inputI, TARGET_TP - inputTp)
+      : 0;
+
   const temporary = `${task.deployPath}.tmp`;
   await execFileAsync('ffmpeg', [
     '-hide_banner',
@@ -130,7 +167,7 @@ async function normaliseToDeploy(task: Task): Promise<void> {
     '-b:a',
     '48k',
     '-af',
-    'loudnorm=I=-18:LRA=7:TP=-2',
+    `volume=${gain.toFixed(2)}dB`,
     '-f',
     'mp3',
     temporary,
@@ -140,6 +177,9 @@ async function normaliseToDeploy(task: Task): Promise<void> {
 
 async function generate(): Promise<void> {
   const force = process.argv.includes('--force');
+  // Re-run normalisation from existing masters (no re-synthesis) — used to re-apply the
+  // loudness fix without re-downloading every clip. --force re-synthesises masters too.
+  const renormalize = process.argv.includes('--renormalize');
   const concurrency = Math.max(1, Number(argValue('--concurrency') ?? 6));
   const tasks = buildTasks();
   const voiceDirs = new Set(
@@ -157,7 +197,10 @@ async function generate(): Promise<void> {
       const task = tasks[cursor++];
       if (!task) return;
       const ready =
-        !force && (await exists(task.deployPath)) && (await stat(task.deployPath)).size > 256;
+        !force &&
+        !renormalize &&
+        (await exists(task.deployPath)) &&
+        (await stat(task.deployPath)).size > 256;
       if (!ready) {
         if (force || !(await exists(task.masterPath))) await synthesiseMaster(task);
         await normaliseToDeploy(task);
