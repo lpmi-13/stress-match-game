@@ -42,7 +42,30 @@ npm run check      # lint, tests, build, and formatting
 - Matching cards reveal the same rhythm. Other cards reveal their different rhythm.
 - Finding all six matches completes the round. Three misses end it.
 - A new round samples a fresh reference word and deck.
+- Every word can be heard by tapping the speaker in the top-left of its card (and the reference
+  word). Each repeat of the same word alternates regular and slowed-down speed.
+- A settings menu switches the pronunciation voice between Ava (US), Sonia (UK), and Andrew (US);
+  the choice is remembered in the browser.
 - The interface supports keyboard play, reduced-motion preferences, and small mobile screens.
+
+## Audio
+
+Word pronunciations are pre-generated with [`edge-tts`](https://github.com/rany2/edge-tts) (the same
+provider used in the sibling `napkin-chats` project) and normalised with `ffmpeg`. Each of the 1,241
+words is rendered in three voices at two speeds (regular and ~25% slower), producing the committed
+clips under `static/audio/<voice>/<word>[.slow].mp3` that Vite serves at `/audio/…`.
+
+Generation is a one-time, offline step and requires `edge-tts` (`pip install edge-tts`) and `ffmpeg`
+on the PATH:
+
+```sh
+npm run audio:generate   # synthesise + normalise any missing clips (resumable)
+npm run audio:validate   # confirm every word/voice/speed clip exists
+```
+
+Raw masters land in the gitignored `generated/audio-masters/`; only the normalised `static/audio/`
+clips are committed. Re-run `audio:generate` after adding words to `src/data/words.ts`; the runtime
+degrades gracefully (silent) for any word without a clip.
 
 ## Deployment
 
@@ -56,11 +79,13 @@ Card metadata use the committed 1200 × 630 PNG in `static/`; the adjacent SVG i
 ## Project layout
 
 ```text
-src/data/    Academic Word List entries grouped by stress pattern
-src/domain/  deterministic deck creation and round state
-src/ui/      DOM application and interaction state
-tests/       Vitest data and domain checks
-e2e/         Playwright interaction, mobile, and accessibility checks
+src/data/      Academic Word List entries grouped by stress pattern, and voice definitions
+src/domain/    deterministic deck creation and round state
+src/ui/        DOM application, interaction state, and audio playback
+scripts/       audio.ts — edge-tts + ffmpeg generation and validation
+static/audio/  committed, normalised pronunciation clips served at /audio/
+tests/         Vitest data, domain, and audio checks
+e2e/           Playwright interaction, mobile, and accessibility checks
 ```
 
 ## Licence

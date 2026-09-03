@@ -1,3 +1,4 @@
+import { VOICES, isVoiceId } from '../data/voices';
 import { STRESS_PATTERNS, type StressPattern } from '../data/words';
 import {
   PATTERN_COPY,
@@ -7,11 +8,14 @@ import {
   type CardSelectionResult,
   type PatternSelection,
 } from '../domain/game';
+import { AudioController } from './audio';
 
 const RESULT_DELAY_MS = 650;
+const PLAY_PULSE_MS = 450;
 
 export class StressMatchApp {
   private readonly root: HTMLElement;
+  private readonly audio = new AudioController();
   private selections = createPatternSelections();
   private selectedPattern: StressPattern = '10';
   private round: StressRound | null = null;
@@ -138,13 +142,23 @@ export class StressMatchApp {
 
           <div class="target-lockup">
             <span>Match this rhythm</span>
+            <button
+              class="target-audio"
+              type="button"
+              id="target-audio"
+              data-word="${escapeHtml(round.selection.word)}"
+              aria-label="Hear ${escapeHtml(round.selection.word)}"
+            >${speakerIcon()}</button>
             <h1 id="game-title">${escapeHtml(round.selection.word)}</h1>
             ${stressMarks(round.selection.pattern)}
           </div>
 
-          <div class="game-stats" aria-label="Round progress">
-            <p><strong id="match-count">0 / 6</strong><span>matched</span></p>
-            <p><strong id="miss-count">0 / 3</strong><span>misses</span></p>
+          <div class="header-end">
+            <div class="game-stats" aria-label="Round progress">
+              <p><strong id="match-count">0 / 6</strong><span>matched</span></p>
+              <p><strong id="miss-count">0 / 3</strong><span>misses</span></p>
+            </div>
+            ${this.settingsMenu()}
           </div>
         </header>
 
@@ -153,21 +167,30 @@ export class StressMatchApp {
           <p class="feedback" id="feedback" role="status" aria-live="polite">
             Select six words with the same strong beat.
           </p>
+          <p class="visually-hidden" id="audio-status" aria-live="polite"></p>
 
           <div class="word-grid" id="word-grid">
             ${round.cards
               .map(
                 (cardItem) => `
-              <button
-                class="word-card"
-                type="button"
-                data-card-id="${escapeHtml(cardItem.id)}"
-                data-match="${String(cardItem.pattern === round.selection.pattern)}"
-                aria-label="Check ${escapeHtml(cardItem.word)}"
-              >
-                <strong>${escapeHtml(cardItem.word)}</strong>
-                <span class="card-hint" aria-hidden="true"></span>
-              </button>
+              <div class="word-cell">
+                <button
+                  class="word-card"
+                  type="button"
+                  data-card-id="${escapeHtml(cardItem.id)}"
+                  data-match="${String(cardItem.pattern === round.selection.pattern)}"
+                  aria-label="Check ${escapeHtml(cardItem.word)}"
+                >
+                  <strong>${escapeHtml(cardItem.word)}</strong>
+                  <span class="card-hint" aria-hidden="true"></span>
+                </button>
+                <button
+                  class="card-audio"
+                  type="button"
+                  data-word="${escapeHtml(cardItem.word)}"
+                  aria-label="Hear ${escapeHtml(cardItem.word)}"
+                >${speakerIcon()}</button>
+              </div>
             `,
               )
               .join('')}
@@ -180,8 +203,67 @@ export class StressMatchApp {
     element<HTMLButtonElement>('#change-pattern').addEventListener('click', () =>
       this.returnToLanding(),
     );
-    element('#word-grid').addEventListener('click', (event) => this.handleCardClick(event));
+    element('#word-grid').addEventListener('click', (event) => this.handleGridClick(event));
+    element<HTMLButtonElement>('#target-audio').addEventListener('click', (event) =>
+      this.playFromButton(event.currentTarget as HTMLButtonElement),
+    );
+    this.bindSettings();
     element<HTMLElement>('.game-screen').focus({ preventScroll: true });
+  }
+
+  private settingsMenu(): string {
+    const current = this.audio.getVoiceId();
+    const options = VOICES.map(
+      (voice) => `
+        <label class="voice-option">
+          <input type="radio" name="voice" value="${voice.id}"${
+            voice.id === current ? ' checked' : ''
+          } />
+          <span class="voice-name">${escapeHtml(voice.label)}</span>
+          <span class="voice-desc">${escapeHtml(voice.description)}</span>
+        </label>`,
+    ).join('');
+    return `
+      <details class="settings-menu" id="settings-menu">
+        <summary aria-label="Voice settings" title="Voice settings">${gearIcon()}</summary>
+        <div class="settings-panel">
+          <fieldset class="voice-picker">
+            <legend>Pronunciation voice</legend>
+            ${options}
+          </fieldset>
+        </div>
+      </details>
+    `;
+  }
+
+  private bindSettings(): void {
+    const menu = document.querySelector<HTMLElement>('#settings-menu');
+    menu?.addEventListener('change', (event) => {
+      const input = event.target as HTMLInputElement;
+      if (input.name === 'voice' && isVoiceId(input.value)) {
+        this.audio.setVoiceId(input.value);
+      }
+    });
+  }
+
+  private handleGridClick(event: Event): void {
+    const audioButton = (event.target as Element).closest<HTMLButtonElement>('.card-audio');
+    if (audioButton) {
+      this.playFromButton(audioButton);
+      return;
+    }
+    this.handleCardClick(event);
+  }
+
+  private playFromButton(button: HTMLButtonElement): void {
+    const word = button.dataset.word;
+    if (!word) return;
+    const { speed } = this.audio.play(word);
+    const status = document.querySelector('#audio-status');
+    if (status) status.textContent = speed === 'slow' ? `${word}, slower` : word;
+
+    button.classList.add('is-playing');
+    window.setTimeout(() => button.classList.remove('is-playing'), PLAY_PULSE_MS);
   }
 
   private handleCardClick(event: Event): void {
@@ -312,6 +394,32 @@ function stressMarks(pattern: StressPattern): string {
         .map((syllable) => `<i class="${syllable === '1' ? 'is-stressed' : ''}"></i>`)
         .join('')}
     </span>
+  `;
+}
+
+function speakerIcon(): string {
+  return `
+    <svg class="icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+      <path fill="currentColor" d="M4 9.5h3.2L12 5.2v13.6L7.2 14.5H4z" />
+      <path
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.7"
+        stroke-linecap="round"
+        d="M15.5 8.8a4.3 4.3 0 0 1 0 6.4M18 6.5a7.7 7.7 0 0 1 0 11"
+      />
+    </svg>
+  `;
+}
+
+function gearIcon(): string {
+  return `
+    <svg class="icon" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+      <path
+        fill="currentColor"
+        d="M19.14 12.94c.04-.31.06-.63.06-.94s-.02-.63-.06-.94l2.03-1.58a.5.5 0 0 0 .12-.64l-1.92-3.32a.5.5 0 0 0-.6-.22l-2.39.96a7 7 0 0 0-1.62-.94l-.36-2.54a.5.5 0 0 0-.5-.42h-3.84a.5.5 0 0 0-.5.42l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96a.5.5 0 0 0-.6.22L2.78 8.9a.5.5 0 0 0 .12.64l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58a.5.5 0 0 0-.12.64l1.92 3.32c.14.24.42.32.66.22l2.39-.96c.49.38 1.03.7 1.62.94l.36 2.54c.05.24.25.42.5.42h3.84c.25 0 .46-.18.5-.42l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.24.1.52.02.66-.22l1.92-3.32a.5.5 0 0 0-.12-.64zM12 15.5A3.5 3.5 0 1 1 12 8.5a3.5 3.5 0 0 1 0 7z"
+      />
+    </svg>
   `;
 }
 

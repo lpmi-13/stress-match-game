@@ -399,8 +399,8 @@ button {
 
 .target-lockup {
   display: grid;
-  grid-template-columns: auto auto;
-  column-gap: 0.75rem;
+  grid-template-columns: auto auto auto;
+  column-gap: 0.5rem;
   align-items: center;
   justify-items: center;
 }
@@ -564,6 +564,208 @@ button {
   background: var(--ink);
 }
 
+/* Audio */
+.word-cell {
+  position: relative;
+  display: flex;
+}
+
+.word-cell > .word-card {
+  flex: 1;
+}
+
+.card-audio {
+  position: absolute;
+  top: 0.35rem;
+  left: 0.35rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    background 140ms ease;
+}
+
+.card-audio:hover {
+  color: var(--paper);
+  background: rgb(255 255 255 / 10%);
+}
+
+/* On a revealed (coloured) card the speaker uses the dark ink for contrast. */
+.word-card[data-state] ~ .card-audio {
+  color: var(--ink);
+}
+
+.word-card[data-state] ~ .card-audio:hover {
+  background: rgb(13 23 20 / 14%);
+}
+
+.card-audio.is-playing {
+  color: var(--blue);
+}
+
+.word-card[data-state] ~ .card-audio.is-playing {
+  color: var(--ink);
+}
+
+.target-audio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--blue);
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    background 140ms ease;
+}
+
+.target-audio:hover {
+  color: var(--paper);
+  background: rgb(255 255 255 / 8%);
+}
+
+.card-audio .icon,
+.target-audio .icon {
+  display: block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-audio.is-playing .icon,
+  .target-audio.is-playing .icon {
+    animation: audio-pulse 450ms ease;
+  }
+
+  @keyframes audio-pulse {
+    0% {
+      transform: scale(1);
+    }
+    45% {
+      transform: scale(1.18);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+}
+
+/* Settings */
+.header-end {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-self: end;
+}
+
+.settings-menu {
+  position: relative;
+}
+
+.settings-menu > summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.5rem;
+  color: var(--muted);
+  cursor: pointer;
+  list-style: none;
+  transition:
+    color 140ms ease,
+    background 140ms ease;
+}
+
+.settings-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.settings-menu > summary::marker {
+  content: "";
+}
+
+.settings-menu > summary:hover,
+.settings-menu[open] > summary {
+  color: var(--paper);
+  background: rgb(255 255 255 / 8%);
+}
+
+.settings-panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.4rem);
+  z-index: 20;
+  width: 13rem;
+  padding: 0.35rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--panel-deep);
+  box-shadow: var(--shadow);
+}
+
+.voice-picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.voice-picker legend {
+  padding: 0.35rem 0.55rem 0.5rem;
+  color: var(--muted);
+  font-size: 0.56rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.voice-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 0.55rem;
+  align-items: center;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.45rem;
+  cursor: pointer;
+}
+
+.voice-option:hover {
+  background: rgb(255 255 255 / 6%);
+}
+
+.voice-option input {
+  grid-row: 1 / 3;
+  margin: 0;
+  accent-color: var(--blue);
+}
+
+.voice-name {
+  grid-column: 2;
+  grid-row: 1;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.voice-desc {
+  grid-column: 2;
+  grid-row: 2;
+  color: var(--muted);
+  font-size: 0.62rem;
+}
+
 /* Result */
 .result-screen {
   display: grid;
@@ -666,7 +868,7 @@ button {
     grid-row: 2;
   }
 
-  .game-stats {
+  .header-end {
     grid-column: 2;
     grid-row: 1;
   }

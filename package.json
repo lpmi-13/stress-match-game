@@ -16,6 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "playwright test",
+    "audio:generate": "node scripts/audio.ts generate",
+    "audio:validate": "node scripts/audio.ts validate",
     "check": "npm run lint && npm run test && npm run build && npm run format:check"
   },
   "engines": {
