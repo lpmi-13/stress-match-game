@@ -237,11 +237,17 @@ export class StressMatchApp {
   }
 
   private bindSettings(): void {
-    const menu = document.querySelector<HTMLElement>('#settings-menu');
-    menu?.addEventListener('change', (event) => {
+    const menu = document.querySelector<HTMLDetailsElement>('#settings-menu');
+    if (!menu) return;
+    menu.addEventListener('change', (event) => {
       const input = event.target as HTMLInputElement;
       if (input.name === 'voice' && isVoiceId(input.value)) {
         this.audio.setVoiceId(input.value);
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) {
+        menu.open = false;
       }
     });
   }
