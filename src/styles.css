@@ -41,7 +41,9 @@ input {
 }
 
 button,
-a {
+a,
+label,
+summary {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -704,17 +706,47 @@ button {
   background: rgb(255 255 255 / 8%);
 }
 
+/*
+ * Keep the disclosure content rendered through open and close so the panel
+ * can transition. Modern browsers wrap <details> content in ::details-content
+ * and flip its content-visibility instantly on toggle, which would snap the
+ * panel in and out; forcing it visible hands the show/hide back to the panel's
+ * own visibility/opacity transitions below. (Older engines lack the pseudo and
+ * ignore this rule; the explicit display on .settings-panel covers them.)
+ */
+.settings-menu::details-content {
+  content-visibility: visible;
+}
+
 .settings-panel {
   position: absolute;
   right: 0;
   top: calc(100% + 0.4rem);
   z-index: 20;
+  display: block;
   width: 13rem;
   padding: 0.35rem;
   border: 1px solid var(--line);
   border-radius: 0.7rem;
   background: var(--panel-deep);
-  box-shadow: var(--shadow);
+  /* drop-shadow (not box-shadow) so the shadow follows the clipped shape and
+     unrolls with the panel; box-shadow would be cut away by the clip-path. */
+  filter: drop-shadow(var(--shadow));
+  clip-path: inset(0 0 100% 0 round 0.7rem);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    clip-path 380ms cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s linear 380ms;
+}
+
+.settings-menu[open] .settings-panel {
+  clip-path: inset(0 0 0 0 round 0.7rem);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    clip-path 380ms cubic-bezier(0.32, 0.72, 0, 1),
+    visibility 0s;
 }
 
 .voice-picker {
@@ -988,7 +1020,9 @@ button {
   .pattern-option-content,
   .start-action button,
   .primary-action,
-  .word-card {
+  .word-card,
+  .settings-panel,
+  .settings-menu[open] .settings-panel {
     transition: none;
   }
 }

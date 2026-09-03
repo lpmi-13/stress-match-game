@@ -243,6 +243,7 @@ export class StressMatchApp {
       const input = event.target as HTMLInputElement;
       if (input.name === 'voice' && isVoiceId(input.value)) {
         this.audio.setVoiceId(input.value);
+        menu.open = false;
       }
     });
     document.addEventListener('click', (event) => {
