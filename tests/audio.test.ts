@@ -26,6 +26,14 @@ describe('AudioController', () => {
     expect(controller.play('beta').speed).toBe('slow');
   });
 
+  it('resets to regular speed when the voice changes', () => {
+    const controller = new AudioController();
+    expect(controller.play('example').speed).toBe('regular');
+    controller.setVoiceId('andrew');
+    expect(controller.play('example').speed).toBe('regular');
+    expect(controller.play('example').speed).toBe('slow');
+  });
+
   it('defaults to Ava and remembers a chosen voice across instances', () => {
     expect(new AudioController().getVoiceId()).toBe('ava');
     const controller = new AudioController();

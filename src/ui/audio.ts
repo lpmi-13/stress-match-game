@@ -22,6 +22,9 @@ export class AudioController {
 
   setVoiceId(voiceId: VoiceId): void {
     this.voiceId = voiceId;
+    // Switching speaker restarts the alternation cycle so the next play of any
+    // word is at regular speed rather than continuing mid-cycle from the old voice.
+    this.playCounts.clear();
     try {
       localStorage.setItem(STORAGE_KEY, voiceId);
     } catch {
