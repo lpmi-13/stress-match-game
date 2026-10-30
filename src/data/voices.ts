@@ -23,6 +23,18 @@ export const VOICES = [
     label: 'Andrew',
     description: 'American English',
   },
+  {
+    id: 'neerja',
+    providerVoiceId: 'en-IN-NeerjaNeural',
+    label: 'Neerja',
+    description: 'Indian English',
+  },
+  {
+    id: 'abeo',
+    providerVoiceId: 'en-NG-AbeoNeural',
+    label: 'Abeo',
+    description: 'Nigerian English',
+  },
 ] as const satisfies readonly Voice[];
 
 export type VoiceId = (typeof VOICES)[number]['id'];

@@ -32,6 +32,20 @@ test('wins after finding all six matching words', async ({ page }) => {
   await expect(page.getByText('You found all six words')).toBeVisible();
 });
 
+test('offers Neerja and Abeo and remembers the selected voice', async ({ page }) => {
+  await page.goto('/');
+  await page.getByRole('button', { name: /Start matching/i }).click();
+  await page.locator('summary[aria-label="Voice settings"]').click();
+
+  await expect(page.getByRole('radio', { name: /Neerja.*Indian English/i })).toBeVisible();
+  const abeo = page.getByRole('radio', { name: /Abeo.*Nigerian English/i });
+  await abeo.check();
+  await page.reload();
+  await page.getByRole('button', { name: /Start matching/i }).click();
+  await page.locator('summary[aria-label="Voice settings"]').click();
+  await expect(page.getByRole('radio', { name: /Abeo.*Nigerian English/i })).toBeChecked();
+});
+
 test('ends after three misses and supports choosing another pattern', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: /Start matching/i }).click();
@@ -99,4 +113,7 @@ test('does not overflow a mobile viewport', async ({ page }) => {
     scroll: document.documentElement.scrollWidth,
   }));
   expect(game.scroll).toBeLessThanOrEqual(game.client + 1);
+
+  await page.locator('summary[aria-label="Voice settings"]').click();
+  await expect(page.locator('.settings-panel')).toBeInViewport();
 });

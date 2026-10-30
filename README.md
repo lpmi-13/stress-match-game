@@ -44,19 +44,19 @@ npm run check      # lint, tests, build, and formatting
 - A new round samples a fresh reference word and deck.
 - Every word can be heard by tapping the speaker in the top-left of its card (and the reference
   word). Each repeat of the same word alternates regular and slowed-down speed.
-- A settings menu switches the pronunciation voice between Ava (US), Sonia (UK), and Andrew (US);
-  the choice is remembered in the browser.
+- A settings menu switches the pronunciation voice between Ava (US), Sonia (UK), Andrew (US),
+  Neerja (India), and Abeo (Nigeria); the choice is remembered in the browser.
 - The interface supports keyboard play, reduced-motion preferences, and small mobile screens.
 
 ## Audio
 
 Word pronunciations are pre-generated with [`edge-tts`](https://github.com/rany2/edge-tts) (the same
 provider used in the sibling `napkin-chats` project) and normalised with `ffmpeg`. Each of the 1,241
-words is rendered in three voices at two speeds (regular and ~25% slower), producing the committed
+words is rendered in five voices at two speeds (regular and ~25% slower), producing the committed
 clips under `static/audio/<voice>/<word>[.slow].mp3` that Vite serves at `/audio/…`.
 
-Generation is a one-time, offline step and requires `edge-tts` (`pip install edge-tts`) and `ffmpeg`
-on the PATH:
+Generation is a one-time preparation step and requires `edge-tts` 7.3.1 or newer
+(`pip install 'edge-tts>=7.3.1'`) and `ffmpeg` on the PATH:
 
 ```sh
 npm run audio:generate   # synthesise + normalise any missing clips (resumable)
